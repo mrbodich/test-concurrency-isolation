@@ -55,6 +55,16 @@ actor AsyncNonIsolatedWrappedComputer: Computer {
     }
 }
 
+actor AsyncAnotherActorComputer: Computer {
+    private(set) var events: [Event] = []
+    
+    func testComputing(id: Int, complexity: Int) async {
+        events.append(.init(.in, id: id))
+        await StandaloneComputingActor.shared.compute(complexity: complexity)
+        events.append(.init(.out, id: id))
+    }
+}
+
 actor DirectComputer: Computer {
     private(set) var events: [Event] = []
     
@@ -62,5 +72,16 @@ actor DirectComputer: Computer {
         events.append(.init(.in, id: id))
         Self.computingJob(complexity: complexity)
         events.append(.init(.out, id: id))
+    }
+}
+
+actor StandaloneComputingActor {
+    init() {}
+    static let shared: StandaloneComputingActor = .init()
+    
+    func compute(complexity: Int) async {
+        for _ in 0..<(100_000 * complexity) {
+            let _ = sqrt(0.5)
+        }
     }
 }

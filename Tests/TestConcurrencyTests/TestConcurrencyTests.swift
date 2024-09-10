@@ -136,6 +136,30 @@ final class TestConcurrencyTests: XCTestCase {
             )
         }
     }
+    
+    func testIsolatedWrapperAnotherActorConcurrency() async throws {
+        //  given
+        let computer = AsyncIsolatedWrapperAnotherActorComputer()
+        let jobs: [Int] = [10, 5, 3, 8, 2]
+        
+        //  when
+        await run(jobs: jobs, on: computer)
+        
+        // then
+        /// We expect the next sequence here: [in(2), in(0), in(1), out(1), out(0), out(2)]
+        /// Eg all jobs started concurrently, not waiting for each other, and then finished concurrently
+        let events = await computer.events
+        for index in jobs.indices {
+            XCTAssertEqual(
+                events[index].eventType,
+                .in
+            )
+            XCTAssertEqual(
+                events[index + jobs.count].eventType,
+                .out
+            )
+        }
+    }
 }
 
 extension TestConcurrencyTests {

@@ -55,7 +55,7 @@ actor AsyncNonIsolatedWrappedComputer: Computer {
     }
 }
 
-actor AsyncAnotherActorComputer: Computer {
+actor AsyncAnotherContextComputer: Computer {
     private(set) var events: [Event] = []
     
     func testComputing(id: Int, complexity: Int) async {
@@ -65,7 +65,7 @@ actor AsyncAnotherActorComputer: Computer {
     }
 }
 
-actor AsyncIsolatedWrapperAnotherActorComputer: Computer {
+actor AsyncIsolatedWrapperAnotherContextComputer: Computer {
     private(set) var events: [Event] = []
     
     func testComputing(id: Int, complexity: Int) async {

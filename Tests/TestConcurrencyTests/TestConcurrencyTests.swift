@@ -113,9 +113,9 @@ final class TestConcurrencyTests: XCTestCase {
         }
     }
     
-    func testAnotherActorConcurrency() async throws {
+    func testAnotherContextConcurrency() async throws {
         //  given
-        let computer = AsyncAnotherActorComputer()
+        let computer = AsyncAnotherContextComputer()
         let jobs: [Int] = [10, 5, 3, 8, 2]
         
         //  when
@@ -137,9 +137,9 @@ final class TestConcurrencyTests: XCTestCase {
         }
     }
     
-    func testIsolatedWrapperAnotherActorConcurrency() async throws {
+    func testIsolatedWrapperAnotherContextConcurrency() async throws {
         //  given
-        let computer = AsyncIsolatedWrapperAnotherActorComputer()
+        let computer = AsyncIsolatedWrapperAnotherContextComputer()
         let jobs: [Int] = [10, 5, 3, 8, 2]
         
         //  when
